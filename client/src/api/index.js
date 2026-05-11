@@ -69,3 +69,10 @@ export function createTaskStream(taskId, onMessage) {
 export function getAudioUrl(taskId, chapterIndex) {
   return `/api/audio/${taskId}/${chapterIndex}`
 }
+
+/**
+ * 获取批量下载 zip URL
+ */
+export function getZipUrl(taskId) {
+  return `/api/audio/${taskId}/zip/all`
+}

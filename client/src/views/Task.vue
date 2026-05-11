@@ -17,6 +17,15 @@
       <div class="status-tag">
         <el-tag :type="statusTagType">{{ statusText }}</el-tag>
         <el-tag v-if="task.failed > 0" type="danger">{{ task.failed }} 章失败</el-tag>
+        <el-button
+          v-if="task.done > 0"
+          type="primary"
+          size="small"
+          :loading="downloadingZip"
+          @click="downloadAll"
+        >
+          打包下载 ({{ task.done }} 章)
+        </el-button>
       </div>
     </div>
 
@@ -73,7 +82,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { getTaskStatus, createTaskStream, getAudioUrl } from '../api'
+import { getTaskStatus, createTaskStream, getAudioUrl, getZipUrl } from '../api'
 
 const props = defineProps({
   taskId: String,
@@ -92,6 +101,7 @@ const task = ref({
 const currentAudio = ref('')
 const currentTitle = ref('')
 const audioRef = ref(null)
+const downloadingZip = ref(false)
 let eventSource = null
 
 const progressStatus = computed(() => {
@@ -153,6 +163,19 @@ function downloadChapter(index, title) {
   a.href = url
   a.download = `${title}.mp3`
   a.click()
+}
+
+async function downloadAll() {
+  downloadingZip.value = true
+  try {
+    const url = getZipUrl(props.taskId)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${task.value.bookName || 'book'}.zip`
+    a.click()
+  } finally {
+    setTimeout(() => { downloadingZip.value = false }, 2000)
+  }
 }
 
 onMounted(async () => {
