@@ -1,0 +1,15 @@
+node_modules/
+dist/
+output/
+uploads/
+.env
+*.log
+.DS_Store
+Thumbs.db
+*.mp3
+*.wav
+server/voice-samples/
+.claude/
+*.png
+Xiaomi*.html
+Xiaomi*_files/
