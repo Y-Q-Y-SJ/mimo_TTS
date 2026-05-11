@@ -188,15 +188,26 @@ GET /api/voices/:voiceId/sample
 
 ```
 tts/
-├── server/
-│   ├── index.js                 # Express 入口
-│   ├── .env                     # 环境变量
-│   ├── routes/
+├── README.md
+├── .gitignore
+│
+├── docs/
+│   ├── PROJECT.md               # 项目结构说明
+│   └── requirements.md          # 需求文档
+│
+├── test/
+│   └── 道爷我修的就是道.txt       # 测试用小说
+│
+├── server/                      # 后端 (Express)
+│   ├── index.js                 # 入口
+│   ├── package.json
+│   ├── .env.example             # 环境变量模板
+│   ├── routes/                  # API 路由
 │   │   ├── book.js              # 书籍上传
-│   │   ├── task.js              # 任务管理 + SSE
+│   │   ├── task.js              # 任务创建 + SSE 进度
 │   │   ├── audio.js             # 音频下载
 │   │   └── voice.js             # 音色列表 + 试听
-│   ├── services/
+│   ├── services/                # 业务逻辑
 │   │   ├── task-manager.js      # 任务状态 & 进度持久化
 │   │   ├── run-task.js          # 任务执行器（章节并发）
 │   │   ├── parser/              # TXT / EPUB / PDF 解析
@@ -204,7 +215,7 @@ tts/
 │   │   │   ├── splitter.js      # 章节分割
 │   │   │   └── chunker.js       # 文本分段
 │   │   └── tts/
-│   │       ├── client.js        # MiMo API 客户端（HTTP）
+│   │       ├── client.js        # MiMo API 客户端
 │   │       ├── synthesizer.js   # 合成调度（段内并发）
 │   │       ├── audio-utils.js   # WAV 拼接 & MP3 转码
 │   │       ├── role-analyzer.js # 对话 / 旁白识别
@@ -213,16 +224,16 @@ tts/
 │       ├── config.js            # 配置
 │       └── logger.js            # 日志
 │
-├── client/                      # Vue 3 + Element Plus 前端
-│   └── src/
-│       ├── views/
-│       │   ├── Home.vue         # 上传 & 解析
-│       │   ├── Config.vue       # 章节选择 & 参数配置 & 音色试听
-│       │   └── Task.vue         # 进度 & 下载
-│       └── api/index.js         # API 封装
-│
-├── requirements.md              # 需求文档
-└── 道爷我修的就是道.txt           # 测试用小说
+└── client/                      # 前端 (Vue 3 + Element Plus)
+    ├── package.json
+    ├── vite.config.js
+    └── src/
+        ├── views/
+        │   ├── Home.vue         # 上传 & 解析
+        │   ├── Config.vue       # 章节选择 & 参数配置 & 音色试听
+        │   └── Task.vue         # 进度 & 下载
+        ├── api/index.js         # API 封装
+        └── router/index.js      # 路由配置
 ```
 
 ## 配置项
